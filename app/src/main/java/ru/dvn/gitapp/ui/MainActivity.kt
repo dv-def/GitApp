@@ -8,15 +8,14 @@ import androidx.lifecycle.coroutineScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.coroutines.launch
 import ru.dvn.gitapp.app
-import ru.dvn.gitapp.data.FakeGitHubRepositoryImpl
 import ru.dvn.gitapp.databinding.ActivityMainBinding
 import ru.dvn.gitapp.domain.GithubRepository
 import ru.dvn.gitapp.ui.users.UsersAdapter
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
+    private val repository: GithubRepository by lazy { app().repository }
     private val adapter = UsersAdapter()
-    private val repository: GithubRepository = app().repository
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -1,4 +1,4 @@
-package ru.dvn.gitapp.data
+package ru.dvn.gitapp.data.fake
 
 import android.os.Handler
 import android.os.Looper
