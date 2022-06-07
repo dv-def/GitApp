@@ -32,6 +32,7 @@ class MainActivity : AppCompatActivity() {
                 repository.getUsers(
                     onSuccess = { userList ->
                         hideProgressBar()
+                        binding.buttonMainLoadUsers.visibility = View.GONE
                         adapter.setData(userList)
                     },
                     onError = { throwable ->
