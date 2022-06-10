@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">GitApp</string>
+    <string name="load_users">Загрузить список пользователей</string>
+    <string name="user_avatar">Аватар</string>
 </resources>
