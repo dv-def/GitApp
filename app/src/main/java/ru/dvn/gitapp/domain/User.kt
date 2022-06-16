@@ -1,4 +1,4 @@
-package ru.dvn.gitapp.domain.models
+package ru.dvn.gitapp.domain
 
 data class User(
     val id: Long,

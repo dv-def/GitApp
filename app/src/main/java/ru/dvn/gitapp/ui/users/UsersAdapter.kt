@@ -2,7 +2,7 @@ package ru.dvn.gitapp.ui.users
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import ru.dvn.gitapp.domain.models.User
+import ru.dvn.gitapp.domain.User
 
 class UsersAdapter : RecyclerView.Adapter<UsersViewHolder>() {
     private val users = mutableListOf<User>()

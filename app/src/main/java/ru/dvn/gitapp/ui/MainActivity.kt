@@ -4,12 +4,11 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
-import androidx.lifecycle.coroutineScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import kotlinx.coroutines.launch
 import ru.dvn.gitapp.app
 import ru.dvn.gitapp.databinding.ActivityMainBinding
 import ru.dvn.gitapp.domain.GithubRepository
+import ru.dvn.gitapp.domain.User
 import ru.dvn.gitapp.ui.users.UsersAdapter
 
 class MainActivity : AppCompatActivity() {
@@ -27,23 +26,22 @@ class MainActivity : AppCompatActivity() {
 
     private fun initUi() {
         binding.buttonMainLoadUsers.setOnClickListener {
-            lifecycle.coroutineScope.launch {
-                showProgressBar()
-                repository.getUsers(
-                    onSuccess = { userList ->
-                        hideProgressBar()
-                        binding.buttonMainLoadUsers.visibility = View.GONE
-                        adapter.setData(userList)
-                    },
-                    onError = { throwable ->
-                        hideProgressBar()
-                        Toast.makeText(this@MainActivity, throwable.message, Toast.LENGTH_SHORT).show()
-                    }
-                )
-            }
+            loadUsers()
         }
 
         initUsersRecyclerView()
+    }
+
+    private fun loadUsers() {
+        changeViewVisibility(view = binding.progressMain, shouldShow = true)
+        repository.getUsers(
+            onSuccess = { userList ->
+                onUsersLoaded(userList)
+            },
+            onError = { throwable ->
+               onDataError(throwable)
+            }
+        )
     }
 
     private fun initUsersRecyclerView() {
@@ -53,11 +51,19 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun showProgressBar() {
-        binding.progressMain.visibility = View.VISIBLE
+    private fun onUsersLoaded(users: List<User>) {
+        changeViewVisibility(view = binding.progressMain, shouldShow = false)
+        changeViewVisibility(view = binding.buttonMainLoadUsers, shouldShow = false)
+        adapter.setData(users)
     }
 
-    private fun hideProgressBar() {
-        binding.progressMain.visibility = View.GONE
+    private fun onDataError(throwable: Throwable) {
+        changeViewVisibility(view = binding.progressMain, shouldShow = false)
+        Toast.makeText(this@MainActivity, throwable.message, Toast.LENGTH_SHORT).show()
     }
+
+    private fun changeViewVisibility(view: View, shouldShow: Boolean) {
+        view.visibility = if (shouldShow) View.VISIBLE else View.GONE
+    }
+
 }

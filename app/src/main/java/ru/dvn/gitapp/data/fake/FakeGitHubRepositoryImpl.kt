@@ -3,14 +3,14 @@ package ru.dvn.gitapp.data.fake
 import android.os.Handler
 import android.os.Looper
 import ru.dvn.gitapp.domain.GithubRepository
-import ru.dvn.gitapp.domain.models.User
+import ru.dvn.gitapp.domain.User
 
 class FakeGitHubRepositoryImpl : GithubRepository {
     companion object {
         private const val DELAY = 2000L
     }
 
-    override suspend fun getUsers(
+    override fun getUsers(
         onSuccess: (List<User>) -> Unit,
         onError: (t: Throwable) -> Unit,
     ) {
