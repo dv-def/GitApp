@@ -3,7 +3,7 @@ package ru.dvn.gitapp.data.remote
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import ru.dvn.gitapp.api.GithubApi
+import ru.dvn.gitapp.data.remote.user.GithubApi
 import ru.dvn.gitapp.data.remote.user.UserDTO
 import ru.dvn.gitapp.data.remote.user.toUser
 import ru.dvn.gitapp.domain.GithubRepository

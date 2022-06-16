@@ -1,5 +1,6 @@
 package ru.dvn.gitapp.ui
 
+import android.content.res.Configuration
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -7,14 +8,16 @@ import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import ru.dvn.gitapp.app
 import ru.dvn.gitapp.databinding.ActivityMainBinding
-import ru.dvn.gitapp.domain.GithubRepository
 import ru.dvn.gitapp.domain.User
 import ru.dvn.gitapp.ui.users.UsersAdapter
+import ru.dvn.gitapp.ui.users.UsersContract
+import ru.dvn.gitapp.ui.users.UsersPresenter
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), UsersContract.View {
     private lateinit var binding: ActivityMainBinding
-    private val repository: GithubRepository by lazy { app().repository }
     private val adapter = UsersAdapter()
+
+    private lateinit var presenter: UsersContract.Presenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,26 +25,45 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         initUi()
+        presenter = restorePresenter()
+        presenter.attach(this)
+    }
+
+    override fun onDestroy() {
+        presenter.detach()
+        super.onDestroy()
+    }
+
+    override fun onRetainCustomNonConfigurationInstance(): UsersContract.Presenter {
+        return presenter
+    }
+
+    override fun showUsers(users: List<User>) {
+        showProgress(inProgress = false)
+        binding.buttonMainLoadUsers.visibility = View.GONE
+        adapter.setData(users)
+    }
+
+    override fun showError(throwable: Throwable) {
+        showProgress(inProgress = false)
+        Toast.makeText(this@MainActivity, throwable.message, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun showProgress(inProgress: Boolean) {
+        binding.progressMain.visibility = if (inProgress) View.VISIBLE else View.GONE
+    }
+
+    private fun restorePresenter(): UsersContract.Presenter {
+        return lastCustomNonConfigurationInstance as? UsersContract.Presenter
+            ?: UsersPresenter(app().repository)
     }
 
     private fun initUi() {
         binding.buttonMainLoadUsers.setOnClickListener {
-            loadUsers()
+            presenter.onLoad()
         }
 
         initUsersRecyclerView()
-    }
-
-    private fun loadUsers() {
-        changeViewVisibility(view = binding.progressMain, shouldShow = true)
-        repository.getUsers(
-            onSuccess = { userList ->
-                onUsersLoaded(userList)
-            },
-            onError = { throwable ->
-               onDataError(throwable)
-            }
-        )
     }
 
     private fun initUsersRecyclerView() {
@@ -50,20 +72,4 @@ class MainActivity : AppCompatActivity() {
             layoutManager = LinearLayoutManager(this@MainActivity)
         }
     }
-
-    private fun onUsersLoaded(users: List<User>) {
-        changeViewVisibility(view = binding.progressMain, shouldShow = false)
-        changeViewVisibility(view = binding.buttonMainLoadUsers, shouldShow = false)
-        adapter.setData(users)
-    }
-
-    private fun onDataError(throwable: Throwable) {
-        changeViewVisibility(view = binding.progressMain, shouldShow = false)
-        Toast.makeText(this@MainActivity, throwable.message, Toast.LENGTH_SHORT).show()
-    }
-
-    private fun changeViewVisibility(view: View, shouldShow: Boolean) {
-        view.visibility = if (shouldShow) View.VISIBLE else View.GONE
-    }
-
 }

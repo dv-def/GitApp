@@ -4,7 +4,7 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import ru.dvn.gitapp.api.GithubApi
+import ru.dvn.gitapp.data.remote.user.GithubApi
 
 object GitRetrofit {
     private const val BASE_URL = "https://api.github.com/"

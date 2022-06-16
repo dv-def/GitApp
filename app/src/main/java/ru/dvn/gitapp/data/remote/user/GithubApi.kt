@@ -1,4 +1,4 @@
-package ru.dvn.gitapp.api
+package ru.dvn.gitapp.data.remote.user
 
 import retrofit2.Call
 import retrofit2.http.GET
