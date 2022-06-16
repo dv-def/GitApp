@@ -1,4 +1,4 @@
-package ru.dvn.gitapp.ui.users
+package ru.dvn.gitapp.ui.users.list
 
 import ru.dvn.gitapp.domain.User
 
@@ -7,6 +7,7 @@ interface UsersContract {
         fun showUsers(users: List<User>)
         fun showError(throwable: Throwable)
         fun showProgress(inProgress: Boolean)
+        fun goToDetails(nickName: String)
     }
 
     interface Presenter {
@@ -14,5 +15,6 @@ interface UsersContract {
         fun detach()
 
         fun onLoad()
+        fun onGoToDetails(nickName: String)
     }
 }

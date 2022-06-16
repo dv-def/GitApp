@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.MainActivity"
+    tools:context=".ui.users.list.MainActivity"
     android:id="@+id/fragment_container">
 
     <Button
@@ -12,9 +12,9 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/load_users"
-        android:layout_marginStart="@dimen/activity_main_common_margin"
-        android:layout_marginTop="@dimen/activity_main_common_margin"
-        android:layout_marginEnd="@dimen/activity_main_common_margin"
+        android:layout_marginStart="@dimen/common_margin"
+        android:layout_marginTop="@dimen/common_margin"
+        android:layout_marginEnd="@dimen/common_margin"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
@@ -23,7 +23,7 @@
         android:id="@+id/recycler_view_main_users"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_margin="@dimen/activity_main_common_margin"
+        android:layout_margin="@dimen/common_margin"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/button_main_load_users"
         app:layout_constraintEnd_toEndOf="parent"

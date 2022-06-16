@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.users.details.UserDetailsActivity"
+    android:padding="@dimen/user_details_padding">
+    
+    <ImageView
+        android:id="@+id/user_details_avatar"
+        android:layout_width="@dimen/user_details_avatar_size"
+        android:layout_height="@dimen/user_details_avatar_size"
+        android:contentDescription="@string/user_avatar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:id="@+id/user_details_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/common_margin"
+        android:textSize="@dimen/user_details_name_text_size"
+        app:layout_constraintStart_toEndOf="@id/user_details_avatar"
+        app:layout_constraintTop_toTopOf="@id/user_details_avatar"/>
+
+    <TextView
+        android:id="@+id/user_details_public_repos_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/common_margin"
+        android:text="@string/public_repos"
+        android:textStyle="bold"
+        android:textSize="@dimen/user_detail_info_text_size"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toEndOf="@id/user_details_avatar"
+        app:layout_constraintTop_toBottomOf="@id/user_details_name"
+        app:layout_constraintEnd_toStartOf="@id/user_details_public_repos_value"/>
+
+    <TextView
+        android:id="@+id/user_details_public_repos_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/common_margin"
+        android:textSize="@dimen/user_detail_info_text_size"
+        app:layout_constraintStart_toEndOf="@id/user_details_public_repos_title"
+        app:layout_constraintTop_toTopOf="@id/user_details_public_repos_title"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <TextView
+        android:id="@+id/user_details_public_gists_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/common_margin"
+        android:text="@string/public_gists"
+        android:textStyle="bold"
+        android:textSize="@dimen/user_detail_info_text_size"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toEndOf="@id/user_details_avatar"
+        app:layout_constraintTop_toBottomOf="@id/user_details_public_repos_title"
+        app:layout_constraintEnd_toStartOf="@id/user_details_public_gists_value"/>
+
+    <TextView
+        android:id="@+id/user_details_public_gists_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/common_margin"
+        android:textSize="@dimen/user_detail_info_text_size"
+        app:layout_constraintStart_toEndOf="@id/user_details_public_gists_title"
+        app:layout_constraintTop_toTopOf="@id/user_details_public_gists_title"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <TextView
+        android:id="@+id/user_details_public_followers_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/common_margin"
+        android:text="@string/followers"
+        android:textStyle="bold"
+        android:textSize="@dimen/user_detail_info_text_size"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toEndOf="@id/user_details_avatar"
+        app:layout_constraintTop_toBottomOf="@id/user_details_public_gists_title"
+        app:layout_constraintEnd_toStartOf="@id/user_details_public_followers_value"/>
+
+    <TextView
+        android:id="@+id/user_details_public_followers_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/common_margin"
+        android:textSize="@dimen/user_detail_info_text_size"
+        app:layout_constraintStart_toEndOf="@id/user_details_public_followers_title"
+        app:layout_constraintTop_toTopOf="@id/user_details_public_followers_title"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <TextView
+        android:id="@+id/user_details_public_following_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/common_margin"
+        android:text="@string/following"
+        android:textStyle="bold"
+        android:textSize="@dimen/user_detail_info_text_size"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toEndOf="@id/user_details_avatar"
+        app:layout_constraintTop_toBottomOf="@id/user_details_public_followers_title"
+        app:layout_constraintEnd_toStartOf="@id/user_details_public_following_value"/>
+
+    <TextView
+        android:id="@+id/user_details_public_following_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/common_margin"
+        android:textSize="@dimen/user_detail_info_text_size"
+        app:layout_constraintStart_toEndOf="@id/user_details_public_following_title"
+        app:layout_constraintTop_toTopOf="@id/user_details_public_following_title"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/user_details_view_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="user_details_avatar,
+            user_details_public_repos_title,
+            user_details_public_repos_value,
+            user_details_public_gists_title,
+            user_details_public_gists_value,
+            user_details_public_followers_title,
+            user_details_public_followers_value,
+            user_details_public_following_title,
+            user_details_public_following_value"/>
+
+    <ProgressBar
+        android:id="@+id/user_details_progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

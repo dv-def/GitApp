@@ -1,4 +1,4 @@
-package ru.dvn.gitapp.ui.users
+package ru.dvn.gitapp.ui.users.list
 
 import ru.dvn.gitapp.domain.GithubRepository
 import ru.dvn.gitapp.domain.User
@@ -23,6 +23,10 @@ class UsersPresenter(
 
     override fun onLoad() {
        loadUsers()
+    }
+
+    override fun onGoToDetails(nickName: String) {
+        view?.goToDetails(nickName)
     }
 
     private fun loadUsers() {

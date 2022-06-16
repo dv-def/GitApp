@@ -1,6 +1,6 @@
-package ru.dvn.gitapp.ui
+package ru.dvn.gitapp.ui.users.list
 
-import android.content.res.Configuration
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -9,13 +9,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import ru.dvn.gitapp.app
 import ru.dvn.gitapp.databinding.ActivityMainBinding
 import ru.dvn.gitapp.domain.User
-import ru.dvn.gitapp.ui.users.UsersAdapter
-import ru.dvn.gitapp.ui.users.UsersContract
-import ru.dvn.gitapp.ui.users.UsersPresenter
+import ru.dvn.gitapp.ui.users.details.UserDetailsActivity
 
 class MainActivity : AppCompatActivity(), UsersContract.View {
     private lateinit var binding: ActivityMainBinding
-    private val adapter = UsersAdapter()
+    private lateinit var adapter: UsersAdapter
 
     private lateinit var presenter: UsersContract.Presenter
 
@@ -53,6 +51,12 @@ class MainActivity : AppCompatActivity(), UsersContract.View {
         binding.progressMain.visibility = if (inProgress) View.VISIBLE else View.GONE
     }
 
+    override fun goToDetails(nickName: String) {
+        startActivity(Intent(this, UserDetailsActivity::class.java).apply {
+            putExtra(UserDetailsActivity.EXTRA_NICK_NAME, nickName)
+        })
+    }
+
     private fun restorePresenter(): UsersContract.Presenter {
         return lastCustomNonConfigurationInstance as? UsersContract.Presenter
             ?: UsersPresenter(app().repository)
@@ -67,6 +71,9 @@ class MainActivity : AppCompatActivity(), UsersContract.View {
     }
 
     private fun initUsersRecyclerView() {
+        adapter = UsersAdapter { nickName ->
+            presenter.onGoToDetails(nickName)
+        }
         binding.recyclerViewMainUsers.apply {
             adapter = this@MainActivity.adapter
             layoutManager = LinearLayoutManager(this@MainActivity)
