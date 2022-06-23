@@ -11,12 +11,12 @@ import ru.dvn.gitapp.app
 import ru.dvn.gitapp.databinding.ActivityUserDetailsBinding
 import ru.dvn.gitapp.domain.UserDetails
 
-class UserDetailsActivity : AppCompatActivity(), UserDetailsContract.View {
+class UserDetailsActivity : AppCompatActivity() {
     companion object {
         const val EXTRA_NICK_NAME = "EXTRA_NICK_NAME"
     }
     private lateinit var binding: ActivityUserDetailsBinding
-    private lateinit var presenter: UserDetailsContract.Presenter
+    private lateinit var viewModel: UserDetailsContract.ViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,42 +24,37 @@ class UserDetailsActivity : AppCompatActivity(), UserDetailsContract.View {
         setContentView(binding.root)
 
         intent.extras?.getString(EXTRA_NICK_NAME)?.let { nickName ->
-            presenter = restorePresenter(nickName)
-            presenter.attach(this)
+            initViewModel(nickName)
+            viewModel.loadDetails()
         } ?: run {
             Toast.makeText(this, R.string.no_nick_name, Toast.LENGTH_SHORT).show()
             finish()
         }
     }
 
-    override fun onDestroy() {
-        presenter.detach()
-        super.onDestroy()
+    override fun onRetainCustomNonConfigurationInstance(): UserDetailsContract.ViewModel {
+        return viewModel
     }
 
-    override fun onRetainCustomNonConfigurationInstance(): UserDetailsContract.Presenter {
-        return presenter
-    }
-
-    override fun showUserDetails(userDetails: UserDetails) {
+    private fun showUserDetails(userDetails: UserDetails) {
         showProgress(inProgress = false)
         binding.userDetailsViewGroup.visibility = View.VISIBLE
         renderDetails(userDetails = userDetails)
     }
 
-    override fun showError(t: Throwable) {
+    private fun showError(t: Throwable) {
         showProgress(inProgress = false)
         Toast.makeText(this, t.message, Toast.LENGTH_SHORT).show()
     }
 
-    override fun showProgress(inProgress: Boolean) {
+    private fun showProgress(inProgress: Boolean) {
         binding.userDetailsProgress.isVisible = inProgress
         binding.userDetailsViewGroup.isVisible = !inProgress
     }
 
-    private fun restorePresenter(nickName: String): UserDetailsContract.Presenter {
-        return lastCustomNonConfigurationInstance as? UserDetailsContract.Presenter
-            ?: UserDetailsPresenter(app().repository, nickName)
+    private fun restoreViewModel(nickName: String): UserDetailsContract.ViewModel {
+        return lastCustomNonConfigurationInstance as? UserDetailsContract.ViewModel
+            ?: UserDetailsViewModel(app().repository, nickName)
     }
 
     private fun renderDetails(userDetails: UserDetails) {
@@ -98,6 +93,21 @@ class UserDetailsActivity : AppCompatActivity(), UserDetailsContract.View {
                 binding.userDetailsPublicFollowingValue.visibility = View.GONE
                 binding.userDetailsPublicFollowingValue.visibility = View.GONE
             }
+        }
+    }
+
+    private fun initViewModel(nickName: String) {
+        viewModel = restoreViewModel(nickName)
+        viewModel.userDetailsLiveData.observe(this) {
+            showUserDetails(it)
+        }
+
+        viewModel.errorLiveData.observe(this) {
+            showError(it)
+        }
+
+        viewModel.inProgressLiveData.observe(this) {
+            showProgress(it)
         }
     }
 }

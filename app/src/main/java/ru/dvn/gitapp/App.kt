@@ -8,8 +8,8 @@ import ru.dvn.gitapp.data.remote.GithubRepositoryImpl
 import ru.dvn.gitapp.domain.GithubRepository
 
 class App : Application() {
-//    val repository: GithubRepository by lazy { GithubRepositoryImpl(GitRetrofit.getGithubApi()) }
-    val repository: GithubRepository by lazy { FakeGitHubRepositoryImpl() }
+    val repository: GithubRepository by lazy { GithubRepositoryImpl(GitRetrofit.getGithubApi()) }
+//    val repository: GithubRepository by lazy { FakeGitHubRepositoryImpl() }
 }
 
 fun Activity.app() = applicationContext as App
