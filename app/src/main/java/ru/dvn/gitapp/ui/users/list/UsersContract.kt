@@ -1,20 +1,15 @@
 package ru.dvn.gitapp.ui.users.list
 
+import androidx.lifecycle.LiveData
 import ru.dvn.gitapp.domain.User
 
 interface UsersContract {
-    interface View {
-        fun showUsers(users: List<User>)
-        fun showError(throwable: Throwable)
-        fun showProgress(inProgress: Boolean)
-        fun goToDetails(nickName: String)
-    }
 
-    interface Presenter {
-        fun attach(view: View)
-        fun detach()
+    interface ViewModel {
+        val usersLiveData:LiveData<List<User>>
+        val errorLiveData:LiveData<Throwable>
+        val inProgressLiveData:LiveData<Boolean>
 
         fun onLoad()
-        fun onGoToDetails(nickName: String)
     }
 }
