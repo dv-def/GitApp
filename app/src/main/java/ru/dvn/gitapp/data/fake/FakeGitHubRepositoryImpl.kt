@@ -16,25 +16,26 @@ class FakeGitHubRepositoryImpl : GithubRepository {
         onError: (t: Throwable) -> Unit,
     ) {
         Handler(Looper.getMainLooper()).postDelayed({
-            onSuccess.invoke(
-                listOf(
-                    User(
-                        id = 1,
-                        login = "mojombo",
-                        avatarUrl = "https://avatars.githubusercontent.com/u/1?v=4"
-                    ),
-                    User(
-                        id = 2,
-                        login = "defunkt",
-                        avatarUrl = "https://avatars.githubusercontent.com/u/2?v=4"
-                    ),
-                    User(
-                        id = 3,
-                        login = "pjhyett",
-                        avatarUrl = "https://avatars.githubusercontent.com/u/3?v=4"
-                    )
-                )
-            )
+//            onSuccess.invoke(
+//                listOf(
+//                    User(
+//                        id = 1,
+//                        login = "mojombo",
+//                        avatarUrl = "https://avatars.githubusercontent.com/u/1?v=4"
+//                    ),
+//                    User(
+//                        id = 2,
+//                        login = "defunkt",
+//                        avatarUrl = "https://avatars.githubusercontent.com/u/2?v=4"
+//                    ),
+//                    User(
+//                        id = 3,
+//                        login = "pjhyett",
+//                        avatarUrl = "https://avatars.githubusercontent.com/u/3?v=4"
+//                    )
+//                )
+//            )
+            onError.invoke(Exception("I'm an error"))
         }, DELAY)
     }
 
