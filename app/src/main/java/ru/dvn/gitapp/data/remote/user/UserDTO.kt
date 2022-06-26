@@ -1,6 +1,7 @@
-package ru.dvn.gitapp.data.remote.dto
+package ru.dvn.gitapp.data.remote.user
 
 import com.google.gson.annotations.SerializedName
+import ru.dvn.gitapp.domain.User
 
 data class UserDTO (
     @SerializedName("id")
@@ -11,4 +12,10 @@ data class UserDTO (
 
     @SerializedName("avatar_url")
     val avatarUrl: String
+)
+
+fun UserDTO.toUser() = User(
+    id = this.id,
+    login = this.login,
+    avatarUrl = this.avatarUrl
 )

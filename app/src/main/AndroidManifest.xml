@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="ru.dvn.gitapp">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:name=".App"
@@ -17,7 +17,10 @@
         android:theme="@style/Theme.GitApp"
         tools:targetApi="31">
         <activity
-            android:name=".ui.MainActivity"
+            android:name=".ui.users.details.UserDetailsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.users.list.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

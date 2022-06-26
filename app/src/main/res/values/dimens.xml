@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="activity_main_common_margin">8dp</dimen>
+    <dimen name="common_margin">8dp</dimen>
     <dimen name="user_list_item_margin">8dp</dimen>
     <dimen name="user_list_item_padding">8dp</dimen>
     <dimen name="user_list_item_card_radius">8dp</dimen>
@@ -8,4 +8,8 @@
     <dimen name="user_avatar_size">72dp</dimen>
     <dimen name="user_name_text_size">22sp</dimen>
     <dimen name="user_list_item_image_border_with">2dp</dimen>
+    <dimen name="user_details_avatar_size">200dp</dimen>
+    <dimen name="user_details_name_text_size">22sp</dimen>
+    <dimen name="user_details_padding">8dp</dimen>
+    <dimen name="user_detail_info_text_size">16sp</dimen>
 </resources>
