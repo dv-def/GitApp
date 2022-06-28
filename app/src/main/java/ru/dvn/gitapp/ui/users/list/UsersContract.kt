@@ -9,7 +9,9 @@ interface UsersContract {
         val users: Observable<List<User>>
         val errors: Observable<Throwable>
         val inProgress: Observable<Boolean>
+        val onOpenDetails: Observable<String>
 
         fun onLoad()
+        fun onClickUser(nickname: String)
     }
 }

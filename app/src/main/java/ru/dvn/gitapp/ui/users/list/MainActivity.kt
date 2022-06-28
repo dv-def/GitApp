@@ -28,7 +28,8 @@ class MainActivity : AppCompatActivity() {
         vmDisposable.addAll(
             viewModel.users.subscribe { showUsers(it) },
             viewModel.errors.subscribe { showError(it) },
-            viewModel.inProgress.subscribe { showProgress(it) }
+            viewModel.inProgress.subscribe { showProgress(it) },
+            viewModel.onOpenDetails.subscribe { goToDetails(it) }
         )
 
         binding.buttonMainLoadUsers.setOnClickListener {
@@ -69,7 +70,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun initUsersRecyclerView() {
         adapter = UsersAdapter { nickName ->
-            goToDetails(nickName)
+            viewModel.onClickUser(nickName)
         }
         binding.recyclerViewMainUsers.apply {
             adapter = this@MainActivity.adapter

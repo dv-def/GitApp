@@ -13,6 +13,7 @@ class UsersViewModel(private val repository: GithubRepository) : UsersContract.V
     override val users: Observable<List<User>> = BehaviorSubject.create()
     override val errors: Observable<Throwable> = BehaviorSubject.create()
     override val inProgress: Observable<Boolean> = BehaviorSubject.create()
+    override val onOpenDetails: Observable<String> = BehaviorSubject.create()
 
     override fun onLoad() {
         inProgress.asSubject().onNext(true)
@@ -28,6 +29,10 @@ class UsersViewModel(private val repository: GithubRepository) : UsersContract.V
                 inProgress.asSubject().onNext(false)
             }
         )
+    }
+
+    override fun onClickUser(nickname: String) {
+        onOpenDetails.asSubject().onNext(nickname)
     }
 
     private fun <T : Any> Observable<T>.asSubject(): Subject<T> {
