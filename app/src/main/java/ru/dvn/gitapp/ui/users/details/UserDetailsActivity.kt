@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.core.view.isVisible
 import coil.load
+import io.reactivex.rxjava3.disposables.CompositeDisposable
 import ru.dvn.gitapp.R
 import ru.dvn.gitapp.app
 import ru.dvn.gitapp.databinding.ActivityUserDetailsBinding
@@ -17,6 +18,8 @@ class UserDetailsActivity : AppCompatActivity() {
     }
     private lateinit var binding: ActivityUserDetailsBinding
     private lateinit var viewModel: UserDetailsContract.ViewModel
+
+    private val vmDisposable = CompositeDisposable()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,6 +33,11 @@ class UserDetailsActivity : AppCompatActivity() {
             Toast.makeText(this, R.string.no_nick_name, Toast.LENGTH_SHORT).show()
             finish()
         }
+    }
+
+    override fun onDestroy() {
+        vmDisposable.dispose()
+        super.onDestroy()
     }
 
     override fun onRetainCustomNonConfigurationInstance(): UserDetailsContract.ViewModel {
@@ -98,16 +106,11 @@ class UserDetailsActivity : AppCompatActivity() {
 
     private fun initViewModel(nickName: String) {
         viewModel = restoreViewModel(nickName)
-        viewModel.userDetailsLiveData.observe(this) {
-            showUserDetails(it)
-        }
 
-        viewModel.errorLiveData.observe(this) {
-            showError(it)
-        }
-
-        viewModel.inProgressLiveData.observe(this) {
-            showProgress(it)
-        }
+        vmDisposable.addAll(
+            viewModel.userDetails.subscribe { renderDetails(it) },
+            viewModel.errors.subscribe { showError(it) },
+            viewModel.inProgress.subscribe { showProgress(it) }
+        )
     }
 }

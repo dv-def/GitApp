@@ -11,5 +11,5 @@ interface GithubApi {
     fun getUsers(): Single<List<UserDTO>>
 
     @GET("users/{nick_name}")
-    fun getUserDetails(@Path("nick_name") nickName: String): Call<UserDetailsDTO>
+    fun getUserDetails(@Path("nick_name") nickName: String): Single<UserDetailsDTO>
 }

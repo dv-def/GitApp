@@ -6,10 +6,6 @@ import ru.dvn.gitapp.domain.User
 import ru.dvn.gitapp.domain.UserDetails
 
 class FakeGitHubRepositoryImpl : GithubRepository {
-    companion object {
-        private const val DELAY = 2000L
-    }
-
     private val data = listOf(
         User(
             id = 1,
@@ -30,12 +26,8 @@ class FakeGitHubRepositoryImpl : GithubRepository {
 
     override fun getUsers(): Single<List<User>> = Single.just(data)
 
-    override fun getUserDetails(
-        nickName: String,
-        onSuccess: (UserDetails) -> Unit,
-        onError: (t: Throwable) -> Unit
-    ) {
-        onSuccess.invoke(
+    override fun getUserDetails(nickName: String): Single<UserDetails> {
+        return Single.just(
             UserDetails(
                 login = "defunkt",
                 avatarUrl = "https://avatars.githubusercontent.com/u/2?v=4",
