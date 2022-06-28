@@ -25,6 +25,9 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         viewModel = restoreViewModel()
+
+        initUsersRecyclerView()
+
         vmDisposable.addAll(
             viewModel.users.subscribe { showUsers(it) },
             viewModel.errors.subscribe { showError(it) },
@@ -35,8 +38,6 @@ class MainActivity : AppCompatActivity() {
         binding.buttonMainLoadUsers.setOnClickListener {
             viewModel.onLoad()
         }
-
-        initUsersRecyclerView()
     }
 
     override fun onDestroy() {
@@ -72,6 +73,7 @@ class MainActivity : AppCompatActivity() {
         adapter = UsersAdapter { nickName ->
             viewModel.onClickUser(nickName)
         }
+
         binding.recyclerViewMainUsers.apply {
             adapter = this@MainActivity.adapter
             layoutManager = LinearLayoutManager(this@MainActivity)
