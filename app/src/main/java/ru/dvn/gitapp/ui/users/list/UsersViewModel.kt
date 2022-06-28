@@ -1,42 +1,36 @@
 package ru.dvn.gitapp.ui.users.list
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.kotlin.subscribeBy
+import io.reactivex.rxjava3.subjects.BehaviorSubject
+import io.reactivex.rxjava3.subjects.Subject
 import ru.dvn.gitapp.domain.GithubRepository
 import ru.dvn.gitapp.domain.User
-import ru.dvn.gitapp.ui.users.SingleEventLiveData
 
 class UsersViewModel(private val repository: GithubRepository) : UsersContract.ViewModel {
 
-    override val usersLiveData: LiveData<List<User>> = MutableLiveData()
-    override val errorLiveData: LiveData<Throwable> = SingleEventLiveData()
-    override val inProgressLiveData: LiveData<Boolean> = MutableLiveData()
+    override val users: Observable<List<User>> = BehaviorSubject.create()
+    override val errors: Observable<Throwable> = BehaviorSubject.create()
+    override val inProgress: Observable<Boolean> = BehaviorSubject.create()
 
     override fun onLoad() {
-        inProgressLiveData.asMutable().postValue(true)
-//        repository.getUsers(
-//            onSuccess = { userList ->
-//                usersLiveData.asMutable().postValue(userList)
-//                inProgressLiveData.asMutable().postValue(false)
-//            },
-//            onError = { throwable ->
-//                errorLiveData.asMutable().postValue(throwable)
-//                inProgressLiveData.asMutable().postValue(false)
-//            }
-//        )
-        repository.getUsers().subscribeBy(
+        inProgress.asSubject().onNext(true)
+        repository.getUsers()
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeBy(
             onSuccess = { usersList ->
-                usersLiveData.asMutable().postValue(usersList)
-                inProgressLiveData.asMutable().postValue(false)
+                users.asSubject().onNext(usersList)
+                inProgress.asSubject().onNext(false)
             },
             onError = { t ->
-                errorLiveData.asMutable().postValue(t)
-                inProgressLiveData.asMutable().postValue(false)
+                errors.asSubject().onNext(t)
+                inProgress.asSubject().onNext(false)
             }
         )
     }
 
-    private fun <T> LiveData<T>.asMutable() =
-        this as? MutableLiveData<T> ?: throw IllegalStateException("Can't cast a LiveData")
+    private fun <T : Any> Observable<T>.asSubject(): Subject<T> {
+        return this as? Subject<T> ?: throw IllegalStateException("It's not Observable")
+    }
 }
