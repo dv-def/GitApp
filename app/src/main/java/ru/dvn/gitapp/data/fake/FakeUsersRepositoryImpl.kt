@@ -1,11 +1,11 @@
 package ru.dvn.gitapp.data.fake
 
 import io.reactivex.rxjava3.core.Single
-import ru.dvn.gitapp.domain.GithubRepository
+import ru.dvn.gitapp.domain.UsersRepository
 import ru.dvn.gitapp.domain.User
 import ru.dvn.gitapp.domain.UserDetails
 
-class FakeGitHubRepositoryImpl : GithubRepository {
+class FakeUsersRepositoryImpl : UsersRepository {
     private val data = listOf(
         User(
             id = 1,

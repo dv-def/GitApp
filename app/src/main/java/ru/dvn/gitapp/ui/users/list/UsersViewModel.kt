@@ -5,10 +5,10 @@ import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.kotlin.subscribeBy
 import io.reactivex.rxjava3.subjects.BehaviorSubject
 import io.reactivex.rxjava3.subjects.Subject
-import ru.dvn.gitapp.domain.GithubRepository
 import ru.dvn.gitapp.domain.User
+import ru.dvn.gitapp.domain.UsersRepository
 
-class UsersViewModel(private val repository: GithubRepository) : UsersContract.ViewModel {
+class UsersViewModel(private val repository: UsersRepository) : UsersContract.ViewModel {
 
     override val users: Observable<List<User>> = BehaviorSubject.create()
     override val errors: Observable<Throwable> = BehaviorSubject.create()

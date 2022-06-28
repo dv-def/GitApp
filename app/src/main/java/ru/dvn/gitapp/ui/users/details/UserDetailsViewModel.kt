@@ -5,11 +5,11 @@ import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.kotlin.subscribeBy
 import io.reactivex.rxjava3.subjects.BehaviorSubject
 import io.reactivex.rxjava3.subjects.Subject
-import ru.dvn.gitapp.domain.GithubRepository
+import ru.dvn.gitapp.domain.UsersRepository
 import ru.dvn.gitapp.domain.UserDetails
 
 class UserDetailsViewModel(
-    private val repository: GithubRepository,
+    private val repository: UsersRepository,
     private val nickName: String
 ) : UserDetailsContract.ViewModel {
 
