@@ -27,6 +27,7 @@ class UserDetailsActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         intent.extras?.getString(EXTRA_NICK_NAME)?.let { nickName ->
+            binding.noDataUserDetails.root.visibility = View.GONE
             initViewModel(nickName)
             viewModel.loadDetails()
         } ?: run {
@@ -52,7 +53,8 @@ class UserDetailsActivity : AppCompatActivity() {
 
     private fun showError(t: Throwable) {
         showProgress(inProgress = false)
-        Toast.makeText(this, t.message, Toast.LENGTH_SHORT).show()
+        binding.userDetailsViewGroup.visibility = View.GONE
+        binding.noDataUserDetails.root.visibility = View.VISIBLE
     }
 
     private fun showProgress(inProgress: Boolean) {
