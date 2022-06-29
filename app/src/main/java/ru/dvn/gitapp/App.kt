@@ -13,11 +13,7 @@ import ru.dvn.gitapp.domain.UsersRepository
 class App : Application() {
     private lateinit var applicationDatabase: AppDatabase
 
-    val remoteRepository: UsersRepository by lazy {
-        RemoteUsersRepositoryImpl(GitRetrofit.getGithubApi())
-    }
-
-    val cachedRepository: UsersRepository by lazy {
+    val mainRepository: UsersRepository by lazy {
         CachedUsersRepository(
             RemoteUsersRepositoryImpl(GitRetrofit.getGithubApi()),
             LocalUsersRepositoryImpl(applicationDatabase.userDao())

@@ -1,7 +1,7 @@
 package ru.dvn.gitapp.domain
 
 data class UserDetails (
-    val login: String?,
+    val id: Long,
     val avatarUrl: String?,
     val name: String?,
     val publicRepos: Int?,

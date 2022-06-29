@@ -4,6 +4,7 @@ import io.reactivex.rxjava3.core.Single
 import ru.dvn.gitapp.data.local.user.UserDao
 import ru.dvn.gitapp.data.local.user.toEntity
 import ru.dvn.gitapp.data.local.user.toUser
+import ru.dvn.gitapp.data.local.user.toUserDetails
 import ru.dvn.gitapp.domain.User
 import ru.dvn.gitapp.domain.UserDetails
 import ru.dvn.gitapp.domain.UsersRepository
@@ -16,10 +17,16 @@ class LocalUsersRepositoryImpl(private val userDao: UserDao) : UsersRepository {
     }
 
     override fun getUserDetails(nickName: String): Single<UserDetails> {
-        TODO("Not yet implemented")
+        return userDao.getDetails(nickName).map { entity ->
+            entity.toUserDetails()
+        }
     }
 
-    fun saveUsers(users: List<User>) {
-        userDao.insert(users.map { it.toEntity() })
+    fun saveUsersList(users: List<User>) {
+        userDao.insertList(users.map { it.toEntity() })
+    }
+
+    fun saveDetails(details: UserDetails) {
+        userDao.insertDetails(details.toEntity())
     }
 }

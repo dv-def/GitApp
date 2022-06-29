@@ -62,7 +62,7 @@ class UserDetailsActivity : AppCompatActivity() {
 
     private fun restoreViewModel(nickName: String): UserDetailsContract.ViewModel {
         return lastCustomNonConfigurationInstance as? UserDetailsContract.ViewModel
-            ?: UserDetailsViewModel(app().remoteRepository, nickName)
+            ?: UserDetailsViewModel(app().mainRepository, nickName)
     }
 
     private fun renderDetails(userDetails: UserDetails) {
@@ -108,7 +108,7 @@ class UserDetailsActivity : AppCompatActivity() {
         viewModel = restoreViewModel(nickName)
 
         vmDisposable.addAll(
-            viewModel.userDetails.subscribe { renderDetails(it) },
+            viewModel.userDetails.subscribe { showUserDetails(it) },
             viewModel.errors.subscribe { showError(it) },
             viewModel.inProgress.subscribe { showProgress(it) }
         )

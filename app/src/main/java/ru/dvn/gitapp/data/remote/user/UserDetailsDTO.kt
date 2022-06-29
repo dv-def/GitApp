@@ -4,6 +4,9 @@ import com.google.gson.annotations.SerializedName
 import ru.dvn.gitapp.domain.UserDetails
 
 data class UserDetailsDTO (
+    @SerializedName("id")
+    val userId: Long,
+
     @SerializedName("login")
     val login: String?,
 
@@ -27,7 +30,7 @@ data class UserDetailsDTO (
 )
 
 fun UserDetailsDTO.toUserDetails():UserDetails = UserDetails(
-    login = this.login,
+    id = this.userId,
     avatarUrl = this.avatarUrl,
     name = this.name,
     publicRepos = this.publicRepos,

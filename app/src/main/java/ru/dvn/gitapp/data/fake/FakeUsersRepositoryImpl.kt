@@ -29,7 +29,7 @@ class FakeUsersRepositoryImpl : UsersRepository {
     override fun getUserDetails(nickName: String): Single<UserDetails> {
         return Single.just(
             UserDetails(
-                login = "defunkt",
+                id = 2,
                 avatarUrl = "https://avatars.githubusercontent.com/u/2?v=4",
                 name = "Chris Wanstrath",
                 publicRepos = 107,

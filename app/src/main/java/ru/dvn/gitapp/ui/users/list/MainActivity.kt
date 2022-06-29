@@ -65,7 +65,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun restoreViewModel(): UsersContract.ViewModel {
         return lastCustomNonConfigurationInstance as? UsersContract.ViewModel
-            ?: UsersViewModel(app().cachedRepository)
+            ?: UsersViewModel(app().mainRepository)
     }
 
     private fun initUsersRecyclerView() {
