@@ -3,7 +3,6 @@ package ru.dvn.gitapp.data.cached
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.kotlin.subscribeBy
 import ru.dvn.gitapp.data.local.LocalUsersRepositoryImpl
-import ru.dvn.gitapp.data.local.user.toEntity
 import ru.dvn.gitapp.data.remote.RemoteUsersRepositoryImpl
 import ru.dvn.gitapp.domain.User
 import ru.dvn.gitapp.domain.UserDetails
