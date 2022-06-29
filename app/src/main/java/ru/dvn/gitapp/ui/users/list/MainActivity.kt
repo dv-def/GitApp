@@ -51,7 +51,6 @@ class MainActivity : AppCompatActivity() {
 
     private fun showUsers(users: List<User>) {
         showProgress(inProgress = false)
-        binding.buttonMainLoadUsers.visibility = View.GONE
         adapter.setData(users)
     }
 
