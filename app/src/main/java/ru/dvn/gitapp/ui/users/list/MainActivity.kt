@@ -51,7 +51,15 @@ class MainActivity : AppCompatActivity() {
 
     private fun showUsers(users: List<User>) {
         showProgress(inProgress = false)
-        adapter.setData(users)
+        if (users.isEmpty()) {
+            binding.recyclerViewMainUsers.visibility = View.GONE
+            binding.noDataUser.root.visibility = View.VISIBLE
+        } else {
+            adapter.setData(users)
+
+            binding.recyclerViewMainUsers.visibility = View.VISIBLE
+            binding.noDataUser.root.visibility = View.GONE
+        }
     }
 
     private fun showError(throwable: Throwable) {

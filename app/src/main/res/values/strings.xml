@@ -7,4 +7,5 @@
     <string name="followers">"Followers: "</string>
     <string name="following">"Following: "</string>
     <string name="no_nick_name">No nickname</string>
+    <string name="no_data">Нам не удалось ничего найти :(</string>
 </resources>

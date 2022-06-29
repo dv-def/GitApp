@@ -27,7 +27,7 @@ class CachedUsersRepository(
                             emitter.onSuccess(it)
                         },
                         onError = {
-                            emitter.onError(it)
+                            emitter.onError(Exception("IM BEDA"))
                         }
                     )
                 }
