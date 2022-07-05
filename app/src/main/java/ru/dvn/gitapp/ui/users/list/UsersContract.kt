@@ -1,15 +1,17 @@
 package ru.dvn.gitapp.ui.users.list
 
-import androidx.lifecycle.LiveData
+import io.reactivex.rxjava3.core.Observable
 import ru.dvn.gitapp.domain.User
 
 interface UsersContract {
 
     interface ViewModel {
-        val usersLiveData:LiveData<List<User>>
-        val errorLiveData:LiveData<Throwable>
-        val inProgressLiveData:LiveData<Boolean>
+        val users: Observable<List<User>>
+        val errors: Observable<Throwable>
+        val inProgress: Observable<Boolean>
+        val onOpenDetails: Observable<String>
 
         fun onLoad()
+        fun onClickUser(nickname: String)
     }
 }

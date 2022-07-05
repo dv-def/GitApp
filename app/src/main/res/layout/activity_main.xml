@@ -29,6 +29,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
+    <include
+        android:id="@+id/no_data_user"
+        layout="@layout/no_data_layout"
+        android:visibility="gone"/>
+
     <ProgressBar
         android:id="@+id/progress_main"
         android:layout_width="wrap_content"
