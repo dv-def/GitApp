@@ -35,10 +35,6 @@ class MainActivity : AppCompatActivity() {
             viewModel.onOpenDetails.subscribe { goToDetails(it) },
             binding.buttonMainLoadUsers.btnObservable.subscribe { loadData() }
         )
-
-//        binding.buttonMainLoadUsers.setOnClickListener {
-//            viewModel.onLoad()
-//        }
     }
 
     override fun onDestroy() {
