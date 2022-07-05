@@ -32,12 +32,13 @@ class MainActivity : AppCompatActivity() {
             viewModel.users.subscribe { showUsers(it) },
             viewModel.errors.subscribe { showError(it) },
             viewModel.inProgress.subscribe { showProgress(it) },
-            viewModel.onOpenDetails.subscribe { goToDetails(it) }
+            viewModel.onOpenDetails.subscribe { goToDetails(it) },
+            binding.buttonMainLoadUsers.btnObservable.subscribe { loadData() }
         )
 
-        binding.buttonMainLoadUsers.setOnClickListener {
-            viewModel.onLoad()
-        }
+//        binding.buttonMainLoadUsers.setOnClickListener {
+//            viewModel.onLoad()
+//        }
     }
 
     override fun onDestroy() {
@@ -47,6 +48,10 @@ class MainActivity : AppCompatActivity() {
 
     override fun onRetainCustomNonConfigurationInstance(): UsersContract.ViewModel {
         return viewModel
+    }
+
+    private fun loadData() {
+        viewModel.onLoad()
     }
 
     private fun showUsers(users: List<User>) {

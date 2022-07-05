@@ -7,7 +7,7 @@
     tools:context=".ui.users.list.MainActivity"
     android:id="@+id/fragment_container">
 
-    <Button
+    <ru.dvn.gitapp.ui.users.custom.RxButton
         android:id="@+id/button_main_load_users"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
