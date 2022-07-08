@@ -17,7 +17,14 @@ class UsersViewHolder(
     private val binding = UserItemBinding.bind(itemView)
 
     fun bind(user: User) {
-        binding.userItemAvatar.load(user.avatarUrl)
+        user.avatarUrl?.let {
+            binding.userItemAvatar.load(user.avatarUrl) {
+                placeholder(R.drawable.ic_baseline_account_circle_24)
+            }
+        } ?: run {
+            binding.userItemAvatar.setImageResource(R.drawable.ic_baseline_account_circle_24)
+        }
+
         binding.userItemName.text = user.login
         binding.userItemId.text = user.id.toString()
 
