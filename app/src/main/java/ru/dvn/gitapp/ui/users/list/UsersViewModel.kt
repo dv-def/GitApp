@@ -20,15 +20,15 @@ class UsersViewModel(private val repository: UsersRepository) : UsersContract.Vi
         repository.getUsers()
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeBy(
-            onSuccess = { usersList ->
-                users.asSubject().onNext(usersList)
-                inProgress.asSubject().onNext(false)
-            },
-            onError = { t ->
-                errors.asSubject().onNext(t)
-                inProgress.asSubject().onNext(false)
-            }
-        )
+                onSuccess = { usersList ->
+                    users.asSubject().onNext(usersList)
+                    inProgress.asSubject().onNext(false)
+                },
+                onError = { t ->
+                    errors.asSubject().onNext(t)
+                    inProgress.asSubject().onNext(false)
+                }
+            )
     }
 
     override fun onClickUser(nickname: String) {
