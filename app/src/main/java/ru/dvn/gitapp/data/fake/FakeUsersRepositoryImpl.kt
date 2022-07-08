@@ -32,6 +32,7 @@ class FakeUsersRepositoryImpl : UsersRepository {
                 id = 2,
                 avatarUrl = "https://avatars.githubusercontent.com/u/2?v=4",
                 name = "Chris Wanstrath",
+                login = "defunkt",
                 publicRepos = 107,
                 publicGists = 273,
                 followers = 21444,

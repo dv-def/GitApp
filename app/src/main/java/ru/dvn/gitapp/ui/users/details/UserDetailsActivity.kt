@@ -71,7 +71,10 @@ class UserDetailsActivity : AppCompatActivity() {
         with(userDetails) {
             avatarUrl?.let {
                 binding.userDetailsAvatar.load(it)
+            } ?: run {
+                binding.userDetailsAvatar.setImageResource(R.drawable.ic_baseline_account_box_24)
             }
+
             name?.let {
                 binding.userDetailsName.text = it
             } ?: run { binding.userDetailsName.visibility = View.GONE }
