@@ -4,6 +4,7 @@ import androidx.room.Room
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.android.ext.koin.androidContext
+import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
@@ -15,9 +16,13 @@ import ru.dvn.gitapp.data.local.user.UserDao
 import ru.dvn.gitapp.data.remote.RemoteUsersRepositoryImpl
 import ru.dvn.gitapp.data.remote.user.GithubApi
 import ru.dvn.gitapp.domain.UsersRepository
+import ru.dvn.gitapp.ui.users.details.UserDetailsViewModel
+import ru.dvn.gitapp.ui.users.list.UsersViewModel
 
 val appModule = module {
     single<UsersRepository> { CachedUsersRepository(get(), get()) }
+    viewModel { UsersViewModel(get()) }
+    viewModel { UserDetailsViewModel(get()) }
 }
 
 val localModule = module {

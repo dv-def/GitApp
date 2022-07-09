@@ -7,21 +7,18 @@ import android.widget.Toast
 import androidx.core.view.isVisible
 import coil.load
 import io.reactivex.rxjava3.disposables.CompositeDisposable
-import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.dvn.gitapp.R
 import ru.dvn.gitapp.databinding.ActivityUserDetailsBinding
 import ru.dvn.gitapp.domain.UserDetails
-import ru.dvn.gitapp.domain.UsersRepository
 
 class UserDetailsActivity : AppCompatActivity() {
     companion object {
         const val EXTRA_NICK_NAME = "EXTRA_NICK_NAME"
     }
     private lateinit var binding: ActivityUserDetailsBinding
-    private lateinit var viewModel: UserDetailsContract.ViewModel
 
-    private val repository: UsersRepository by inject()
-
+    private val viewModel: UserDetailsViewModel by viewModel()
     private val vmDisposable = CompositeDisposable()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,8 +28,8 @@ class UserDetailsActivity : AppCompatActivity() {
 
         intent.extras?.getString(EXTRA_NICK_NAME)?.let { nickName ->
             binding.noDataUserDetails.root.visibility = View.GONE
-            initViewModel(nickName)
-            viewModel.loadDetails()
+            initViewModel()
+            viewModel.loadDetails(nickName)
         } ?: run {
             Toast.makeText(this, R.string.no_nick_name, Toast.LENGTH_SHORT).show()
             finish()
@@ -42,10 +39,6 @@ class UserDetailsActivity : AppCompatActivity() {
     override fun onDestroy() {
         vmDisposable.dispose()
         super.onDestroy()
-    }
-
-    override fun onRetainCustomNonConfigurationInstance(): UserDetailsContract.ViewModel {
-        return viewModel
     }
 
     private fun showUserDetails(userDetails: UserDetails) {
@@ -58,16 +51,12 @@ class UserDetailsActivity : AppCompatActivity() {
         showProgress(inProgress = false)
         binding.userDetailsViewGroup.visibility = View.GONE
         binding.noDataUserDetails.root.visibility = View.VISIBLE
+        Toast.makeText(this, t.message, Toast.LENGTH_SHORT).show()
     }
 
     private fun showProgress(inProgress: Boolean) {
         binding.userDetailsProgress.isVisible = inProgress
         binding.userDetailsViewGroup.isVisible = !inProgress
-    }
-
-    private fun restoreViewModel(nickName: String): UserDetailsContract.ViewModel {
-        return lastCustomNonConfigurationInstance as? UserDetailsContract.ViewModel
-            ?: UserDetailsViewModel(repository, nickName)
     }
 
     private fun renderDetails(userDetails: UserDetails) {
@@ -112,9 +101,7 @@ class UserDetailsActivity : AppCompatActivity() {
         }
     }
 
-    private fun initViewModel(nickName: String) {
-        viewModel = restoreViewModel(nickName)
-
+    private fun initViewModel() {
         vmDisposable.addAll(
             viewModel.userDetails.subscribe { showUserDetails(it) },
             viewModel.errors.subscribe { showError(it) },
