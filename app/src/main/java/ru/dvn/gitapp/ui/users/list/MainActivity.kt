@@ -7,9 +7,10 @@ import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import io.reactivex.rxjava3.disposables.CompositeDisposable
-import ru.dvn.gitapp.app
+import org.koin.android.ext.android.inject
 import ru.dvn.gitapp.databinding.ActivityMainBinding
 import ru.dvn.gitapp.domain.User
+import ru.dvn.gitapp.domain.UsersRepository
 import ru.dvn.gitapp.ui.users.details.UserDetailsActivity
 
 class MainActivity : AppCompatActivity() {
@@ -17,6 +18,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var adapter: UsersAdapter
 
     private lateinit var viewModel: UsersContract.ViewModel
+    private val repository: UsersRepository by inject()
     private val vmDisposable = CompositeDisposable()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -74,7 +76,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun restoreViewModel(): UsersContract.ViewModel {
         return lastCustomNonConfigurationInstance as? UsersContract.ViewModel
-            ?: UsersViewModel(app().repository)
+            ?: UsersViewModel(repository)
     }
 
     private fun initUsersRecyclerView() {

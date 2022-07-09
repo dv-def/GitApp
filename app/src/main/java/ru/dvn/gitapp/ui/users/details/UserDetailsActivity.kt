@@ -7,10 +7,11 @@ import android.widget.Toast
 import androidx.core.view.isVisible
 import coil.load
 import io.reactivex.rxjava3.disposables.CompositeDisposable
+import org.koin.android.ext.android.inject
 import ru.dvn.gitapp.R
-import ru.dvn.gitapp.app
 import ru.dvn.gitapp.databinding.ActivityUserDetailsBinding
 import ru.dvn.gitapp.domain.UserDetails
+import ru.dvn.gitapp.domain.UsersRepository
 
 class UserDetailsActivity : AppCompatActivity() {
     companion object {
@@ -18,6 +19,8 @@ class UserDetailsActivity : AppCompatActivity() {
     }
     private lateinit var binding: ActivityUserDetailsBinding
     private lateinit var viewModel: UserDetailsContract.ViewModel
+
+    private val repository: UsersRepository by inject()
 
     private val vmDisposable = CompositeDisposable()
 
@@ -64,7 +67,7 @@ class UserDetailsActivity : AppCompatActivity() {
 
     private fun restoreViewModel(nickName: String): UserDetailsContract.ViewModel {
         return lastCustomNonConfigurationInstance as? UserDetailsContract.ViewModel
-            ?: UserDetailsViewModel(app().repository, nickName)
+            ?: UserDetailsViewModel(repository, nickName)
     }
 
     private fun renderDetails(userDetails: UserDetails) {
