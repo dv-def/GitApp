@@ -11,7 +11,6 @@ import ru.dvn.gitapp.R
 import ru.dvn.gitapp.app
 import ru.dvn.gitapp.databinding.ActivityUserDetailsBinding
 import ru.dvn.gitapp.domain.UserDetails
-import ru.dvn.gitapp.domain.UsersRepository
 import javax.inject.Inject
 
 class UserDetailsActivity : AppCompatActivity() {
@@ -21,9 +20,8 @@ class UserDetailsActivity : AppCompatActivity() {
     private lateinit var binding: ActivityUserDetailsBinding
 
     @Inject
-    lateinit var repository: UsersRepository
+    lateinit var viewModel: UserDetailsViewModel
 
-    private val viewModel: UserDetailsViewModel by lazy { UserDetailsViewModel(repository) }
     private val vmDisposable = CompositeDisposable()
 
     override fun onCreate(savedInstanceState: Bundle?) {

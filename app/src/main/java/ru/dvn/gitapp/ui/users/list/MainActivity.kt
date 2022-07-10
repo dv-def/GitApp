@@ -10,7 +10,6 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable
 import ru.dvn.gitapp.app
 import ru.dvn.gitapp.databinding.ActivityMainBinding
 import ru.dvn.gitapp.domain.User
-import ru.dvn.gitapp.domain.UsersRepository
 import ru.dvn.gitapp.ui.users.details.UserDetailsActivity
 import javax.inject.Inject
 
@@ -21,9 +20,7 @@ class MainActivity : AppCompatActivity() {
     private val vmDisposable = CompositeDisposable()
 
     @Inject
-    lateinit var repository: UsersRepository
-
-    private val viewModel: UsersViewModel by lazy { UsersViewModel(repository) }
+    lateinit var viewModel: UsersViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
