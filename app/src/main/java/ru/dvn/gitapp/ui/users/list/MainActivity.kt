@@ -1,16 +1,17 @@
 package ru.dvn.gitapp.ui.users.list
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import io.reactivex.rxjava3.disposables.CompositeDisposable
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import ru.dvn.gitapp.app
 import ru.dvn.gitapp.databinding.ActivityMainBinding
 import ru.dvn.gitapp.domain.User
 import ru.dvn.gitapp.ui.users.details.UserDetailsActivity
+import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -18,12 +19,15 @@ class MainActivity : AppCompatActivity() {
 
     private val vmDisposable = CompositeDisposable()
 
-    private val viewModel by viewModel<UsersViewModel>()
+    @Inject
+    lateinit var viewModel: UsersViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        app().appComponent.inject(this)
 
         initUsersRecyclerView()
 

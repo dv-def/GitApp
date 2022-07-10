@@ -8,6 +8,7 @@ import io.reactivex.rxjava3.subjects.BehaviorSubject
 import io.reactivex.rxjava3.subjects.Subject
 import ru.dvn.gitapp.domain.User
 import ru.dvn.gitapp.domain.UsersRepository
+import javax.inject.Inject
 
 class UsersViewModel(private val repository: UsersRepository)
     : UsersContract.ViewModel, ViewModel() {

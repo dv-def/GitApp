@@ -1,24 +1,13 @@
 package ru.dvn.gitapp
 
+import android.app.Activity
 import android.app.Application
-import org.koin.android.ext.koin.androidContext
-import org.koin.android.ext.koin.androidLogger
-import org.koin.core.context.startKoin
-import ru.dvn.gitapp.di.appModule
-import ru.dvn.gitapp.di.localModule
-import ru.dvn.gitapp.di.remoteModule
+import ru.dvn.gitapp.di.AppComponent
+import ru.dvn.gitapp.di.DaggerAppComponent
 
 class App : Application() {
-    override fun onCreate() {
-        super.onCreate()
-        startKoin {
-            androidLogger()
-            androidContext(this@App)
-            modules(
-                localModule,
-                remoteModule,
-                appModule
-            )
-        }
-    }
+    val appComponent: AppComponent by lazy { DaggerAppComponent.factory().create(this) }
 }
+
+fun Activity.app() = applicationContext as? App
+    ?: throw IllegalStateException("NOT APPLICATION_CONTEXT")
