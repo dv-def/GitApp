@@ -14,7 +14,7 @@ interface UserDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertList(users: List<UserEntity>)
 
-    @Query("SELECT * FROM ${UserDetailsEntity.TABLE_NAME} WHERE name = :nickname")
+    @Query("SELECT * FROM ${UserDetailsEntity.TABLE_NAME} WHERE login = :nickname")
     fun getDetails(nickname: String): Single<UserDetailsEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

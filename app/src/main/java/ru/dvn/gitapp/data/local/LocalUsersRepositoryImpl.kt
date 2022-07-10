@@ -1,5 +1,6 @@
 package ru.dvn.gitapp.data.local
 
+import android.util.Log
 import io.reactivex.rxjava3.core.Single
 import ru.dvn.gitapp.data.local.user.UserDao
 import ru.dvn.gitapp.data.local.user.toEntity
@@ -17,6 +18,7 @@ class LocalUsersRepositoryImpl(private val userDao: UserDao) : UsersRepository {
     }
 
     override fun getUserDetails(nickName: String): Single<UserDetails> {
+        Log.e("RX", nickName)
         return userDao.getDetails(nickName).map { entity ->
             entity.toUserDetails()
         }

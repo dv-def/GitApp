@@ -10,6 +10,6 @@ interface UserDetailsContract {
         val errors: Observable<Throwable>
         val inProgress: Observable<Boolean>
 
-        fun loadDetails()
+        fun loadDetails(nickName: String)
     }
 }

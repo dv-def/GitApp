@@ -1,5 +1,6 @@
 package ru.dvn.gitapp.ui.users.details
 
+import androidx.lifecycle.ViewModel
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.kotlin.subscribeBy
@@ -10,14 +11,13 @@ import ru.dvn.gitapp.domain.UserDetails
 
 class UserDetailsViewModel(
     private val repository: UsersRepository,
-    private val nickName: String
-) : UserDetailsContract.ViewModel {
+) : UserDetailsContract.ViewModel, ViewModel() {
 
     override val userDetails: Observable<UserDetails> = BehaviorSubject.create()
     override val errors: Observable<Throwable> = BehaviorSubject.create()
     override val inProgress: Observable<Boolean> = BehaviorSubject.create()
 
-    override fun loadDetails() {
+    override fun loadDetails(nickName: String) {
         inProgress.asSubject().onNext(true)
         repository.getUserDetails(nickName)
             .observeOn(AndroidSchedulers.mainThread())

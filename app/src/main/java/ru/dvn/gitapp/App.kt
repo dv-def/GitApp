@@ -1,35 +1,24 @@
 package ru.dvn.gitapp
 
-import android.app.Activity
 import android.app.Application
-import androidx.room.Room
-import ru.dvn.gitapp.data.cached.CachedUsersRepository
-import ru.dvn.gitapp.data.local.AppDatabase
-import ru.dvn.gitapp.data.local.LocalUsersRepositoryImpl
-import ru.dvn.gitapp.data.remote.GitRetrofit
-import ru.dvn.gitapp.data.remote.RemoteUsersRepositoryImpl
-import ru.dvn.gitapp.domain.UsersRepository
+import org.koin.android.ext.koin.androidContext
+import org.koin.android.ext.koin.androidLogger
+import org.koin.core.context.startKoin
+import ru.dvn.gitapp.di.appModule
+import ru.dvn.gitapp.di.localModule
+import ru.dvn.gitapp.di.remoteModule
 
 class App : Application() {
-    private lateinit var applicationDatabase: AppDatabase
-
-    val mainRepository: UsersRepository by lazy {
-        CachedUsersRepository(
-            RemoteUsersRepositoryImpl(GitRetrofit.getGithubApi()),
-            LocalUsersRepositoryImpl(applicationDatabase.userDao())
-        )
-    }
-
     override fun onCreate() {
         super.onCreate()
-        synchronized(AppDatabase::class.java) {
-            applicationDatabase = Room.databaseBuilder(
-                applicationContext,
-                AppDatabase::class.java,
-                AppDatabase.DB_NAME
-            ).build()
+        startKoin {
+            androidLogger()
+            androidContext(this@App)
+            modules(
+                localModule,
+                remoteModule,
+                appModule
+            )
         }
     }
 }
-
-fun Activity.app() = applicationContext as App
