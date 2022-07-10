@@ -12,6 +12,7 @@ import ru.dvn.gitapp.databinding.ActivityMainBinding
 import ru.dvn.gitapp.domain.User
 import ru.dvn.gitapp.domain.UsersRepository
 import ru.dvn.gitapp.ui.users.details.UserDetailsActivity
+import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -19,16 +20,18 @@ class MainActivity : AppCompatActivity() {
 
     private val vmDisposable = CompositeDisposable()
 
-    private lateinit var repository: UsersRepository
-    private lateinit var viewModel: UsersViewModel
+    @Inject
+    lateinit var repository: UsersRepository
+
+    private val viewModel: UsersViewModel by lazy { UsersViewModel(repository) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        repository = app().appComponent.getUsersRepository()
-        viewModel = UsersViewModel(repository)
+        app().appComponent.inject(this)
+
         initUsersRecyclerView()
 
         vmDisposable.addAll(

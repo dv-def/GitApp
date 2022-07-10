@@ -1,9 +1,9 @@
 package ru.dvn.gitapp.ui.users.details
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import coil.load
 import io.reactivex.rxjava3.disposables.CompositeDisposable
@@ -12,6 +12,7 @@ import ru.dvn.gitapp.app
 import ru.dvn.gitapp.databinding.ActivityUserDetailsBinding
 import ru.dvn.gitapp.domain.UserDetails
 import ru.dvn.gitapp.domain.UsersRepository
+import javax.inject.Inject
 
 class UserDetailsActivity : AppCompatActivity() {
     companion object {
@@ -19,8 +20,10 @@ class UserDetailsActivity : AppCompatActivity() {
     }
     private lateinit var binding: ActivityUserDetailsBinding
 
-    private lateinit var repository: UsersRepository
-    private lateinit var viewModel: UserDetailsViewModel
+    @Inject
+    lateinit var repository: UsersRepository
+
+    private val viewModel: UserDetailsViewModel by lazy { UserDetailsViewModel(repository) }
     private val vmDisposable = CompositeDisposable()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,8 +31,7 @@ class UserDetailsActivity : AppCompatActivity() {
         binding = ActivityUserDetailsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        repository = app().appComponent.getUsersRepository()
-        viewModel = UserDetailsViewModel(repository)
+        app().appComponent.inject(this)
 
         intent.extras?.getString(EXTRA_NICK_NAME)?.let { nickName ->
             binding.noDataUserDetails.root.visibility = View.GONE

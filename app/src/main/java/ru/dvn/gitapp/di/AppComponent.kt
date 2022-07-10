@@ -3,7 +3,8 @@ package ru.dvn.gitapp.di
 import android.content.Context
 import dagger.BindsInstance
 import dagger.Component
-import ru.dvn.gitapp.domain.UsersRepository
+import ru.dvn.gitapp.ui.users.details.UserDetailsActivity
+import ru.dvn.gitapp.ui.users.list.MainActivity
 import javax.inject.Singleton
 
 @Singleton
@@ -13,7 +14,8 @@ import javax.inject.Singleton
     LocalModule::class
 ])
 interface AppComponent {
-    fun getUsersRepository(): UsersRepository
+    fun inject(mainActivity: MainActivity)
+    fun inject(userDetailsActivity: UserDetailsActivity)
 
     @Component.Factory
     interface Factory {
