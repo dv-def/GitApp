@@ -8,7 +8,9 @@ import javax.inject.Singleton
 
 @Singleton
 @Component(modules = [
-    AppModule::class
+    AppModule::class,
+    RemoteModule::class,
+    LocalModule::class
 ])
 interface AppComponent {
     fun getUsersRepository(): UsersRepository
