@@ -1,5 +1,6 @@
 package ru.dvn.gitapp.ui.users.list
 
+import androidx.lifecycle.ViewModel
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.kotlin.subscribeBy
@@ -8,7 +9,8 @@ import io.reactivex.rxjava3.subjects.Subject
 import ru.dvn.gitapp.domain.User
 import ru.dvn.gitapp.domain.UsersRepository
 
-class UsersViewModel(private val repository: UsersRepository) : UsersContract.ViewModel {
+class UsersViewModel(private val repository: UsersRepository)
+    : UsersContract.ViewModel, ViewModel() {
 
     override val users: Observable<List<User>> = BehaviorSubject.create()
     override val errors: Observable<Throwable> = BehaviorSubject.create()
@@ -20,15 +22,15 @@ class UsersViewModel(private val repository: UsersRepository) : UsersContract.Vi
         repository.getUsers()
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeBy(
-            onSuccess = { usersList ->
-                users.asSubject().onNext(usersList)
-                inProgress.asSubject().onNext(false)
-            },
-            onError = { t ->
-                errors.asSubject().onNext(t)
-                inProgress.asSubject().onNext(false)
-            }
-        )
+                onSuccess = { usersList ->
+                    users.asSubject().onNext(usersList)
+                    inProgress.asSubject().onNext(false)
+                },
+                onError = { t ->
+                    errors.asSubject().onNext(t)
+                    inProgress.asSubject().onNext(false)
+                }
+            )
     }
 
     override fun onClickUser(nickname: String) {

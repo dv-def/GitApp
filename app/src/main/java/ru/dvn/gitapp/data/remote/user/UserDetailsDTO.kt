@@ -33,6 +33,7 @@ fun UserDetailsDTO.toUserDetails():UserDetails = UserDetails(
     id = this.userId,
     avatarUrl = this.avatarUrl,
     name = this.name,
+    login = this.login,
     publicRepos = this.publicRepos,
     publicGists = this.publicGists,
     followers = this.followers,

@@ -11,7 +11,7 @@ import ru.dvn.gitapp.data.local.user.UserEntity
         UserEntity::class,
         UserDetailsEntity::class
     ],
-    version = 1,
+    version = 2,
     exportSchema = false
 )
 

@@ -13,6 +13,9 @@ data class UserDetailsEntity (
     @ColumnInfo(name = "name")
     val name: String?,
 
+    @ColumnInfo(name = "login")
+    val login: String?,
+
     @ColumnInfo(name = "public_repos")
     val publicRepos: Int?,
 
@@ -34,6 +37,7 @@ fun UserDetailsEntity.toUserDetails() = UserDetails(
     id = this.id,
     avatarUrl = null,
     name = this.name,
+    login = this.login,
     publicRepos = this.publicRepos,
     publicGists = this.publicGists,
     followers = this.followers,
@@ -43,6 +47,7 @@ fun UserDetailsEntity.toUserDetails() = UserDetails(
 fun UserDetails.toEntity() = UserDetailsEntity(
     id = this.id,
     name = this.name,
+    login = this.login,
     publicRepos = this.publicRepos,
     publicGists = this.publicGists,
     followers = this.followers,
