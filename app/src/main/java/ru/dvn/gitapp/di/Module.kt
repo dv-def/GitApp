@@ -8,6 +8,8 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import ru.dvn.dilib.DiStorage
+import ru.dvn.dilib.Factory
+import ru.dvn.dilib.Singleton
 import ru.dvn.gitapp.data.cached.CachedUsersRepository
 import ru.dvn.gitapp.data.local.AppDatabase
 import ru.dvn.gitapp.data.local.LocalUsersRepositoryImpl
@@ -15,6 +17,7 @@ import ru.dvn.gitapp.data.local.user.UserDao
 import ru.dvn.gitapp.data.remote.RemoteUsersRepositoryImpl
 import ru.dvn.gitapp.data.remote.user.GithubApi
 import ru.dvn.gitapp.domain.UsersRepository
+import java.util.*
 
 class Module(context: Context, store: DiStorage) {
     private val applicationDatabase: AppDatabase by lazy {
@@ -57,6 +60,7 @@ class Module(context: Context, store: DiStorage) {
     }
 
     init {
-        store.add(UsersRepository::class, repository)
+        store.add(UsersRepository::class, Singleton {repository})
+        store.add(String::class, Factory { UUID.randomUUID().toString() })
     }
 }
