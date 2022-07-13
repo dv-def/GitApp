@@ -9,6 +9,7 @@ import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import ru.dvn.dilib.DiStorage
 import ru.dvn.dilib.Singleton
+import ru.dvn.dilib.singleton
 import ru.dvn.gitapp.data.cached.CachedUsersRepository
 import ru.dvn.gitapp.data.local.AppDatabase
 import ru.dvn.gitapp.data.local.LocalUsersRepositoryImpl
@@ -58,6 +59,6 @@ class Module(context: Context) {
     }
 
     init {
-        DiStorage.add(UsersRepository::class, Singleton {repository})
+        DiStorage.add(singleton { repository })
     }
 }

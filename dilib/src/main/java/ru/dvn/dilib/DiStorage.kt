@@ -3,7 +3,7 @@ package ru.dvn.dilib
 import kotlin.reflect.KClass
 
 object DiStorage {
-    private val store = HashMap<KClass<*>, Dependency>()
+    private val store = HashMap<KClass<*>, Dependency<*>>()
 
     fun <T: Any> get(clazz: KClass<T>): T {
         if (!store.containsKey(clazz)) {
@@ -15,8 +15,12 @@ object DiStorage {
         return dependency.get() as T
     }
 
-    fun <T: Any> add(key: KClass<T>, dependency: Dependency) {
+    fun <T: Any> add(key: KClass<T>, dependency: Dependency<T>) {
         store[key] = dependency
+    }
+
+    inline fun<reified T: Any> add(dependency: Dependency<T>) {
+        add(T::class, dependency)
     }
 }
 
