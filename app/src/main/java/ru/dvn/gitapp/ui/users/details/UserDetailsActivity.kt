@@ -64,7 +64,7 @@ class UserDetailsActivity : AppCompatActivity() {
 
     private fun restoreViewModel(nickName: String): UserDetailsContract.ViewModel {
         return lastCustomNonConfigurationInstance as? UserDetailsContract.ViewModel
-            ?: UserDetailsViewModel(app().repository, nickName)
+            ?: UserDetailsViewModel(app().dependencies.repository, nickName)
     }
 
     private fun renderDetails(userDetails: UserDetails) {
