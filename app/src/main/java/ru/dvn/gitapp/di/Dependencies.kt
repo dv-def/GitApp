@@ -17,6 +17,7 @@ import ru.dvn.gitapp.domain.UsersRepository
 import kotlin.reflect.KClass
 
 class Dependencies(context: Context) {
+    private val store = HashMap<KClass<*>, Any>()
     private lateinit var applicationDatabase: AppDatabase
     private val userDao: UserDao by lazy {
         applicationDatabase.userDao()
@@ -58,9 +59,10 @@ class Dependencies(context: Context) {
     }
 
     fun <T: Any> get(clazz: KClass<T>): T {
-        return when(clazz) {
-            UsersRepository::class -> repository as T
-            else -> throw IllegalArgumentException("Unknown type")
+        if (store.containsKey(clazz)) {
+            return store[clazz] as T
         }
+
+        throw IllegalArgumentException("Unknown Type")
     }
 }
