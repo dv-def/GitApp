@@ -2,7 +2,7 @@ package ru.dvn.dilib
 
 import kotlin.reflect.KClass
 
-class DiStorage {
+object DiStorage {
     private val store = HashMap<KClass<*>, Dependency>()
 
     fun <T: Any> get(clazz: KClass<T>): T {
@@ -19,3 +19,9 @@ class DiStorage {
         store[key] = dependency
     }
 }
+
+inline fun<reified T: Any> get(): T {
+    return DiStorage.get(T::class)
+}
+
+inline fun<reified T: Any> inject() = lazy { get<T>() }

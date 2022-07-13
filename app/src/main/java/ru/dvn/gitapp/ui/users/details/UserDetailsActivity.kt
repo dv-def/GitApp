@@ -7,8 +7,8 @@ import android.widget.Toast
 import androidx.core.view.isVisible
 import coil.load
 import io.reactivex.rxjava3.disposables.CompositeDisposable
+import ru.dvn.dilib.inject
 import ru.dvn.gitapp.R
-import ru.dvn.gitapp.app
 import ru.dvn.gitapp.databinding.ActivityUserDetailsBinding
 import ru.dvn.gitapp.domain.UserDetails
 import ru.dvn.gitapp.domain.UsersRepository
@@ -21,6 +21,8 @@ class UserDetailsActivity : AppCompatActivity() {
     private lateinit var viewModel: UserDetailsContract.ViewModel
 
     private val vmDisposable = CompositeDisposable()
+
+    private val repository: UsersRepository by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,7 +67,7 @@ class UserDetailsActivity : AppCompatActivity() {
 
     private fun restoreViewModel(nickName: String): UserDetailsContract.ViewModel {
         return lastCustomNonConfigurationInstance as? UserDetailsContract.ViewModel
-            ?: UserDetailsViewModel(app().diStore.get(UsersRepository::class), nickName)
+            ?: UserDetailsViewModel(repository, nickName)
     }
 
     private fun renderDetails(userDetails: UserDetails) {
