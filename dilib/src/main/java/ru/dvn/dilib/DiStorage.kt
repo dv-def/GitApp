@@ -1,8 +1,8 @@
-package ru.dvn.gitapp.di
+package ru.dvn.dilib
 
 import kotlin.reflect.KClass
 
-class DiStore {
+class DiStorage {
     private val store = HashMap<KClass<*>, Any>()
 
     fun <T: Any> get(clazz: KClass<T>): T {

@@ -7,6 +7,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
+import ru.dvn.dilib.DiStorage
 import ru.dvn.gitapp.data.cached.CachedUsersRepository
 import ru.dvn.gitapp.data.local.AppDatabase
 import ru.dvn.gitapp.data.local.LocalUsersRepositoryImpl
@@ -15,7 +16,7 @@ import ru.dvn.gitapp.data.remote.RemoteUsersRepositoryImpl
 import ru.dvn.gitapp.data.remote.user.GithubApi
 import ru.dvn.gitapp.domain.UsersRepository
 
-class Module(context: Context, store: DiStore) {
+class Module(context: Context, store: DiStorage) {
     private val applicationDatabase: AppDatabase by lazy {
         synchronized(AppDatabase::class.java) {
             Room.databaseBuilder(

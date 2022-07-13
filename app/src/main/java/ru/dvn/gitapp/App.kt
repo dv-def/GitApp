@@ -2,12 +2,12 @@ package ru.dvn.gitapp
 
 import android.app.Activity
 import android.app.Application
-import ru.dvn.gitapp.di.DiStore
+import ru.dvn.dilib.DiStorage
 import ru.dvn.gitapp.di.Module
 
 class App : Application() {
-    val diStore: DiStore by lazy {
-        DiStore().apply {
+    val diStore: DiStorage by lazy {
+        DiStorage().apply {
             Module(applicationContext, this)
         }
     }
