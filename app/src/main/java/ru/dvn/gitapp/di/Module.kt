@@ -14,11 +14,18 @@ import ru.dvn.gitapp.data.local.user.UserDao
 import ru.dvn.gitapp.data.remote.RemoteUsersRepositoryImpl
 import ru.dvn.gitapp.data.remote.user.GithubApi
 import ru.dvn.gitapp.domain.UsersRepository
-import kotlin.reflect.KClass
 
-class Dependencies(context: Context) {
-    private val store = HashMap<KClass<*>, Any>()
-    private lateinit var applicationDatabase: AppDatabase
+class Module(context: Context, store: DiStore) {
+    private val applicationDatabase: AppDatabase by lazy {
+        synchronized(AppDatabase::class.java) {
+            Room.databaseBuilder(
+                context,
+                AppDatabase::class.java,
+                AppDatabase.DB_NAME
+            ).build()
+        }
+    }
+
     private val userDao: UserDao by lazy {
         applicationDatabase.userDao()
     }
@@ -49,20 +56,6 @@ class Dependencies(context: Context) {
     }
 
     init {
-        synchronized(AppDatabase::class.java) {
-            applicationDatabase = Room.databaseBuilder(
-                context,
-                AppDatabase::class.java,
-                AppDatabase.DB_NAME
-            ).build()
-        }
-    }
-
-    fun <T: Any> get(clazz: KClass<T>): T {
-        if (store.containsKey(clazz)) {
-            return store[clazz] as T
-        }
-
-        throw IllegalArgumentException("Unknown Type")
+        store.add(UsersRepository::class, repository)
     }
 }

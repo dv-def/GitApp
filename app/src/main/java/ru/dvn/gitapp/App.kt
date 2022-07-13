@@ -2,11 +2,14 @@ package ru.dvn.gitapp
 
 import android.app.Activity
 import android.app.Application
-import ru.dvn.gitapp.di.Dependencies
+import ru.dvn.gitapp.di.DiStore
+import ru.dvn.gitapp.di.Module
 
 class App : Application() {
-    val dependencies: Dependencies by lazy {
-        Dependencies(applicationContext)
+    val diStore: DiStore by lazy {
+        DiStore().apply {
+            Module(applicationContext, this)
+        }
     }
 }
 
