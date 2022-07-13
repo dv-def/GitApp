@@ -10,6 +10,7 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable
 import ru.dvn.gitapp.app
 import ru.dvn.gitapp.databinding.ActivityMainBinding
 import ru.dvn.gitapp.domain.User
+import ru.dvn.gitapp.domain.UsersRepository
 import ru.dvn.gitapp.ui.users.details.UserDetailsActivity
 
 class MainActivity : AppCompatActivity() {
@@ -74,7 +75,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun restoreViewModel(): UsersContract.ViewModel {
         return lastCustomNonConfigurationInstance as? UsersContract.ViewModel
-            ?: UsersViewModel(app().dependencies.repository)
+            ?: UsersViewModel(app().dependencies.get(UsersRepository::class))
     }
 
     private fun initUsersRecyclerView() {

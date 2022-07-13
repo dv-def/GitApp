@@ -11,6 +11,7 @@ import ru.dvn.gitapp.R
 import ru.dvn.gitapp.app
 import ru.dvn.gitapp.databinding.ActivityUserDetailsBinding
 import ru.dvn.gitapp.domain.UserDetails
+import ru.dvn.gitapp.domain.UsersRepository
 
 class UserDetailsActivity : AppCompatActivity() {
     companion object {
@@ -64,7 +65,7 @@ class UserDetailsActivity : AppCompatActivity() {
 
     private fun restoreViewModel(nickName: String): UserDetailsContract.ViewModel {
         return lastCustomNonConfigurationInstance as? UserDetailsContract.ViewModel
-            ?: UserDetailsViewModel(app().dependencies.repository, nickName)
+            ?: UserDetailsViewModel(app().dependencies.get(UsersRepository::class), nickName)
     }
 
     private fun renderDetails(userDetails: UserDetails) {
